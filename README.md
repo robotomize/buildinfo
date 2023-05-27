@@ -22,28 +22,10 @@ zap.String("build_sha", buildinfo.SHA()),
 
 ```
 
-### Use flag
+### Use flags
 
 ```shell
 ./exampleapp -buildtag=$(git describe --tags --abbrev=0) -buildtime=$(date -u '+%Y-%m-%d-%H:%M') -buildsha=$(git rev-parse HEAD)
-```
-
-## Use ldflags and Set method
-
-```shell
-go build -ldflags "-X main.Tag=v0.4.0 -X main.Time=2022-05-27 -X main.SHA=e4601a766ce364b65427cbcfd3f0cbfe233725af"
-```
-
-```go
-
-var (
-    BuildTag string
-	BuildTime string
-	BuildSHA string
-)
-
-buildinfo.Set(&BuildTag, &BuildTime, &BuildSHA)
-fmt.Println(buildinfo.Tag(),buildinfo.Time(),buildinfo.SHA())
 ```
 
 ### Use buildinfo ldflags
@@ -54,6 +36,24 @@ go build -ldflags "-X github.com/robotomize/buildinfo.BuildTag=v0.4.0 \
 ```
 
 ```go
+fmt.Println(buildinfo.Tag(),buildinfo.Time(),buildinfo.SHA())
+```
+
+## Use ldflags and Set method
+
+```shell
+go build -ldflags "-X main.BuildTag=v0.4.0 -X main.BuildTime=2022-05-27 -X main.BuildSHA=e4601a766ce364b65427cbcfd3f0cbfe233725af"
+```
+
+```go
+
+var (
+    	BuildTag string
+	BuildTime string
+	BuildSHA string
+)
+
+buildinfo.Set(&BuildTag, &BuildTime, &BuildSHA)
 fmt.Println(buildinfo.Tag(),buildinfo.Time(),buildinfo.SHA())
 ```
 
